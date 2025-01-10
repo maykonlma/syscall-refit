@@ -32,16 +32,19 @@ A ideia central é mostrar como cada uma dessas abordagens, desde chamadas de si
 1. Clone o repositório:
    ```
     git clone https://github.com/maykonlma/syscall-refit.git
+   ```
 
 2. Navegue até o diretório do projeto e execute o Server:
    ```
     cd Server
     dotnet run
+   ```
 
 3. Execute o Client para testar as diferentes implementações de requisição HTTP:
    ```
     cd Client
     dotnet run
+   ```
 
 ## Contribuições
 
