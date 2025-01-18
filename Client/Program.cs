@@ -1,10 +1,19 @@
 ﻿using System.Runtime.InteropServices;
 using Client.Services;
 using ConsoleTools;
+using Microsoft.Extensions.DependencyInjection;
 
 const string HOST = "127.0.0.1";
 const int PORT = 5000;
 const string ROUTE = "weatherforecast";
+
+var serviceCollection = new ServiceCollection();
+serviceCollection.AddHttpClient<HttpClientFactoryService>(client =>
+{
+    client.BaseAddress = new Uri($"http://{HOST}:{PORT}");
+});
+
+var serviceProvider = serviceCollection.BuildServiceProvider();
 
 var menu = new ConsoleMenu(args, level: 1)
     .Add("SysCall for Linux", () =>
@@ -78,6 +87,28 @@ var menu = new ConsoleMenu(args, level: 1)
         
         var client = new HttpClientService();
         client.Request(host: $"http://{HOST}", port: 5000, path: "weatherforecast").Wait();
+        
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+    })
+    .Add("HTTPClientStatic", () =>
+    {
+        Console.WriteLine("You chose HTTPClientStatic.");
+        Console.WriteLine($"Configuration: https://{HOST}:{PORT}/{ROUTE}");
+        
+        var client = new HttpClientStaticService();
+        client.Request(host: $"http://{HOST}", port: 5000, path: "weatherforecast").Wait();
+        
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+    })
+    .Add("HTTPClientFactory", () =>
+    {
+        Console.WriteLine("You chose HTTPClientFactory.");
+        Console.WriteLine($"Configuration: https://{HOST}:{PORT}/{ROUTE}");
+        
+        var httpClientService = serviceProvider.GetRequiredService<HttpClientFactoryService>(); 
+        httpClientService.GetWeatherForecastAsync().Wait();
         
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
