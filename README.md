@@ -46,6 +46,11 @@ A ideia central é mostrar como cada uma dessas abordagens, desde chamadas de si
     dotnet run
    ```
 
+4. Comando para visualizar os sockets no Linux
+   ```
+   tcpdump -i any 'tcp' port 5000
+   ```
+
 ## Contribuições
 
 Sinta-se à vontade para contribuir! Abra uma issue ou envie um pull request.
